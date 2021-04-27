@@ -69,7 +69,13 @@ with open(sys.argv[1], "rb") as f:
         print('writeFile = {}{}'.format(root, d.name))
 
     f.close()
+    #调用js对一次解包的代码进行优化还原
     os.system("node node/wuConfig.js "+name+"/app-config.json")
     os.system("node node/wuJs.js "+name+"/app-service.js")
     os.system("node node/wuWxml.js "+name+"/app-wxss.js")
     os.system("node node/wuWxss.js "+name)
+    #考虑到微信开发者debug支持性问题，删除不需要的文件
+    os.remove(name+"/app-config.json")
+    os.remove(name+"/app-service.js")
+    os.remove(name+"/app-wxss.js")
+    os.remove(name+"/page-frame.js")
